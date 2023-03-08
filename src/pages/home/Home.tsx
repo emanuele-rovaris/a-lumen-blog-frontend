@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {getPosts} from "../../services/posts.service";
-import {IPost} from "../../models/posts.model";
+import {IPost} from "@/models";
+import {getPosts} from "@/services";
 
 const Home: React.FC = () => {
     const [posts, setPosts] = useState<IPost[]>([]);
