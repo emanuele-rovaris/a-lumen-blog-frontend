@@ -14,6 +14,7 @@ interface IRegisterInput {
 
 const Register: React.FC = () => {
     const {register, handleSubmit, formState: {errors}, getValues} = useForm<IRegisterInput>();
+
     const onSubmit: SubmitHandler<IRegisterInput> = data => registerUser({
         email: data.email,
         password: data.password,
