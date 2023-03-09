@@ -26,7 +26,7 @@ const Login: React.FC = () => {
             password: data.password
         }).then(res => {
             setToken(res.access_token);
-            navigate('/home');
+            navigate('/');
             setError(false);
         }).catch(err => {
             setError(true);
