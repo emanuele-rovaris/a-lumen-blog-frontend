@@ -3,6 +3,8 @@ import {Button, TextField} from "@mui/material";
 import {SubmitHandler, useForm} from "react-hook-form";
 import './Login.css';
 import {login} from "@/services";
+import {useOutletContext} from "react-router-dom";
+import {LoadingContext} from "@/App";
 
 interface ILoginInput {
     email: string;
@@ -11,13 +13,17 @@ interface ILoginInput {
 
 const Login: React.FC = () => {
     const {register, handleSubmit, formState: {errors}} = useForm<ILoginInput>();
+    const {setLoading} = useOutletContext<LoadingContext>();
 
-    const onSubmit: SubmitHandler<ILoginInput> = data => login({
-        email: data.email,
-        password: data.password
-    }).then(() => {
-        // TODO session storage, redirect to home and error handling
-    }).catch(err => console.error('Login error', err));
+    const onSubmit: SubmitHandler<ILoginInput> = data => {
+        setLoading(true);
+        login({
+            email: data.email,
+            password: data.password
+        }).then(() => {
+            // TODO session storage, redirect to home and error handling
+        }).catch(err => console.error('Login error', err)).finally(() => setLoading(false));
+    }
 
     return (
         <form className="Login" onSubmit={handleSubmit(onSubmit)}>

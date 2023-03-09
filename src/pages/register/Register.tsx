@@ -3,6 +3,8 @@ import {Button, TextField} from "@mui/material";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {register as registerUser} from "@/services";
 import './Register.css';
+import {useOutletContext} from "react-router-dom";
+import {LoadingContext} from "@/App";
 
 interface IRegisterInput {
     email: string;
@@ -14,15 +16,19 @@ interface IRegisterInput {
 
 const Register: React.FC = () => {
     const {register, handleSubmit, formState: {errors}, getValues} = useForm<IRegisterInput>();
+    const {setLoading} = useOutletContext<LoadingContext>();
 
-    const onSubmit: SubmitHandler<IRegisterInput> = data => registerUser({
-        email: data.email,
-        password: data.password,
-        first_name: data.first_name,
-        last_name: data.last_name,
-    }).then(() => {
-        // TODO navigation to login and error handling
-    }).catch(err => console.error('Error during registration', err));
+    const onSubmit: SubmitHandler<IRegisterInput> = data => {
+        setLoading(true);
+        registerUser({
+            email: data.email,
+            password: data.password,
+            first_name: data.first_name,
+            last_name: data.last_name,
+        }).then(() => {
+            // TODO navigation to login and error handling
+        }).catch(err => console.error('Error during registration', err)).finally(() => setLoading(false));
+    }
 
     return (
         <form className="Register" onSubmit={handleSubmit(onSubmit)}>
