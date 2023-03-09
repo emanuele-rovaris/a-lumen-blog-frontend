@@ -12,5 +12,6 @@ export interface IPost {
         last_name: string;
         created_at: string;
         full_name: string;
+        picture?: string;
     }
 }

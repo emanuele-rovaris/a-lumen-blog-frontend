@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {IPost} from "@/models";
 import {getPosts} from "@/services";
+import './Home.css';
+import {Card} from "@/components";
 
 const Home: React.FC = () => {
     const [posts, setPosts] = useState<IPost[]>([]);
@@ -11,7 +13,11 @@ const Home: React.FC = () => {
             .catch(err => console.error(err));
     }, []);
 
-    return <pre>{JSON.stringify(posts, null, 2)}</pre>;
+    return (
+        <div className="Home">
+            {posts.map((item, index) => <Card key={`card-${index}`} card={item}/>)}
+        </div>
+    );
 }
 
 export default Home;

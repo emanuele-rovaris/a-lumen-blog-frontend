@@ -1,0 +1,7 @@
+.Home {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 0 50px;
+    grid-gap: 30px;
+    margin-bottom: 20px;
+}

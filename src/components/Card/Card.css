@@ -1,0 +1,36 @@
+.Card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 12px 5px lightgray;
+    transition: transform .2s;
+    cursor: pointer;
+    background-color: white;
+}
+
+.Card:hover {
+    transform: scale(1.05);
+}
+
+.Card__text {
+    overflow: hidden;
+    max-height: 200px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+}
+
+.Card__user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Card__user--picture {
+    border-radius: 50%;
+    width: 30px;
+}

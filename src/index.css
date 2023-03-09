@@ -4,10 +4,10 @@
   font-weight: 400;
 }
 
-body {
+body, p {
   margin: 0;
 }
 
 .RouteContainer {
-  margin-top: 80px;
+  margin-top: 90px;
 }
