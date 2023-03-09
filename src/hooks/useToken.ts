@@ -8,8 +8,12 @@ export function useToken() {
         setToken(token);
     };
 
+    const getToken = () => {
+        return localStorage.getItem('token');
+    }
+
     return {
         setToken: saveToken,
-        token
+        token: getToken(),
     }
 }

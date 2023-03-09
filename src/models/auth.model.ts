@@ -3,3 +3,7 @@ export interface ILoginResponse {
     token_type: string;
     expires_in: number,
 }
+
+export interface ILogoutResponse {
+    message: string;
+}

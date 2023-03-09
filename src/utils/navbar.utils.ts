@@ -1,5 +1,6 @@
 import {INavbarItem} from "@/components";
 
+// TODO use enum
 export const NAVBAR_ITEMS: INavbarItem[] = [
     {
         label: 'Home',
@@ -12,5 +13,16 @@ export const NAVBAR_ITEMS: INavbarItem[] = [
     {
         label: 'Register',
         value: '/register',
+    },
+];
+
+export const NAVBAR_ITEMS_LOGGED: INavbarItem[] = [
+    {
+        label: 'Home',
+        value: '/',
+    },
+    {
+        label: 'Logout',
+        value: 'logout',
     },
 ];

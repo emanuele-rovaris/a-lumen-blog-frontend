@@ -1,5 +1,5 @@
 import axios from "axios";
-import {IUser} from "@/models";
+import {ILogoutResponse, IUser} from "@/models";
 import {ILoginResponse} from "@/models/auth.model";
 
 export interface IRegisterPayload {
@@ -35,5 +35,13 @@ export async function login(payload: ILoginPayload): Promise<ILoginResponse> {
         `${import.meta.env.VITE_API_PATH}/auth/login`,
         form,
     );
+    return response.data;
+}
+
+export async function logout(token: string | null): Promise<ILogoutResponse> {
+    const response = await axios.post(
+        `${import.meta.env.VITE_API_PATH}/auth/logout`,
+        {},
+        {headers: {Authorization: `Bearer ${token}`}});
     return response.data;
 }
