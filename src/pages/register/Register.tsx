@@ -3,7 +3,7 @@ import {Button, TextField} from "@mui/material";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {register as registerUser} from "@/services";
 import './Register.css';
-import {useOutletContext} from "react-router-dom";
+import {useNavigate, useOutletContext} from "react-router-dom";
 import {LoadingContext} from "@/App";
 
 interface IRegisterInput {
@@ -17,6 +17,7 @@ interface IRegisterInput {
 const Register: React.FC = () => {
     const {register, handleSubmit, formState: {errors}, getValues} = useForm<IRegisterInput>();
     const {setLoading} = useOutletContext<LoadingContext>();
+    const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<IRegisterInput> = data => {
         setLoading(true);
@@ -26,7 +27,7 @@ const Register: React.FC = () => {
             first_name: data.first_name,
             last_name: data.last_name,
         }).then(() => {
-            // TODO navigation to login and error handling
+            navigate('/login');
         }).catch(err => console.error('Error during registration', err)).finally(() => setLoading(false));
     }
 
