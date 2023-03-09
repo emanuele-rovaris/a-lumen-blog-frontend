@@ -2,6 +2,7 @@ import React from "react";
 import {Button, TextField} from "@mui/material";
 import {SubmitHandler, useForm} from "react-hook-form";
 import './Login.css';
+import {login} from "@/services";
 
 interface ILoginInput {
     email: string;
@@ -11,7 +12,12 @@ interface ILoginInput {
 const Login: React.FC = () => {
     const {register, handleSubmit, formState: {errors}} = useForm<ILoginInput>();
 
-    const onSubmit: SubmitHandler<ILoginInput> = data => console.log('Login', data);
+    const onSubmit: SubmitHandler<ILoginInput> = data => login({
+        email: data.email,
+        password: data.password
+    }).then(() => {
+        // TODO session storage, redirect to home and error handling
+    }).catch(err => console.error('Login error', err));
 
     return (
         <form className="Login" onSubmit={handleSubmit(onSubmit)}>
