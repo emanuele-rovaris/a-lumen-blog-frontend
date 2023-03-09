@@ -2,5 +2,12 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  margin: 30px;
+}
+
+body {
+  margin: 0;
+}
+
+.RouteContainer {
+  margin-top: 80px;
 }
