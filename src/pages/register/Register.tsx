@@ -2,6 +2,7 @@ import React from "react";
 import {Button, TextField} from "@mui/material";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {register as registerUser} from "@/services";
+import './Register.css';
 
 interface IRegisterInput {
     email: string;
@@ -24,12 +25,15 @@ const Register: React.FC = () => {
 
     return (
         <form className="Register" onSubmit={handleSubmit(onSubmit)}>
+            <h2>Register</h2>
             <TextField {...register("first_name", {required: "First name is required"})}
                        label="First Name"
+                       className="Register__field"
                        error={!!errors.first_name}
                        helperText={errors.first_name?.message}/>
             <TextField {...register("last_name", {required: "Last name is required"})}
                        label="Last Name"
+                       className="Register__field"
                        error={!!errors.last_name}
                        helperText={errors.last_name?.message}/>
             <TextField {...register("email", {
@@ -37,6 +41,7 @@ const Register: React.FC = () => {
                 pattern: {value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, message: 'Email not valid'}
             })}
                        label="Email"
+                       className="Register__field"
                        error={!!errors.email}
                        helperText={errors.email?.message}/>
             <TextField {...register("password", {
@@ -44,6 +49,7 @@ const Register: React.FC = () => {
                 minLength: {value: 6, message: 'Password length must contain at least 6 characters'}
             })}
                        label="Password"
+                       className="Register__field"
                        type="Password"
                        error={!!errors.password}
                        helperText={errors.password?.message}/>
@@ -52,10 +58,11 @@ const Register: React.FC = () => {
                 validate: v => v === getValues().password || 'This field is different from password'
             })}
                        label="Confirm password"
+                       className="Register__field"
                        type="Password"
                        error={!!errors.confirm_password}
                        helperText={errors.confirm_password?.message}/>
-            <Button type="submit">Register</Button>
+            <Button type="submit" variant="contained">Register</Button>
         </form>
     );
 }
