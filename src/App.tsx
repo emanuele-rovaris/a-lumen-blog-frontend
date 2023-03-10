@@ -5,12 +5,16 @@ import {Navbar} from "@/components";
 import {NAVBAR_ITEMS, NAVBAR_ITEMS_LOGGED} from "@/utils";
 import {useToken} from "@/hooks";
 import {logout} from "@/services";
+import {useAppDispatch, useAppSelector} from "@/store/store";
+import {setNotificationAction} from "@/store/slices/notificationSlice";
 
 function App() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const {token} = useToken();
+    // const notification = useAppSelector(state => state.notification);
+    // const dispatch = useAppDispatch();
 
     const onNavbarClick = (value: string) => {
         if (value === 'logout') {
@@ -26,6 +30,14 @@ function App() {
 
     return (
         <div className="App">
+            {/*<pre style={{margin: '100px'}}>*/}
+            {/*{JSON.stringify(notification, null, 2)}*/}
+            {/*<button onClick={() => dispatch(setNotificationAction({*/}
+            {/*    status: 'success',*/}
+            {/*    open: true,*/}
+            {/*    message: 'Notification message!'*/}
+            {/*}))}>CLICK</button>*/}
+            {/*</pre>*/}
             <Navbar items={token ? NAVBAR_ITEMS_LOGGED : NAVBAR_ITEMS}
                     active={location.pathname}
                     click={(e) => onNavbarClick(e)}/>
