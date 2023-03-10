@@ -8,6 +8,10 @@ import {Provider} from "react-redux";
 import store from "@/store/store";
 import {ROUTE_PATHS} from "@/models";
 
+// TODO try lazy loading
+// TODO store export refactoring?
+// TODO tests
+
 const router = createBrowserRouter([
     {
         path: ROUTE_PATHS.HOME,

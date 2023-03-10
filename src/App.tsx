@@ -7,6 +7,7 @@ import {useToken} from "@/hooks";
 import {logout} from "@/services";
 import {useAppDispatch, useAppSelector} from "@/store/store";
 import {setNotificationAction} from "@/store/slices/notificationSlice";
+import {ROUTE_PATHS} from "@/models";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ function App() {
     const dispatch = useAppDispatch();
 
     const onNavbarClick = (value: string) => {
-        if (value === 'logout') {
+        if (value === ROUTE_PATHS.LOGOUT) {
             setLoading(true);
             logout(token)
                 .then(() => {
