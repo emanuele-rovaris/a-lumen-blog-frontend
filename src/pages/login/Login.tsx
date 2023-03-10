@@ -9,6 +9,7 @@ import {useToken} from "@/hooks";
 import {useAppDispatch} from "@/store/store";
 import {setNotificationAction} from "@/store/slices/notificationSlice";
 import {NOTIFICATION_STATUS} from "@/utils";
+import {ROUTE_PATHS} from "@/models";
 
 interface ILoginInput {
     email: string;
@@ -35,7 +36,7 @@ const Login: React.FC = () => {
                 message: 'Login success!',
             }));
             setToken(res.access_token);
-            navigate('/');
+            navigate(ROUTE_PATHS.HOME);
             setError(false);
         }).catch(err => {
             dispatch(setNotificationAction({

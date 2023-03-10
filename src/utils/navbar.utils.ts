@@ -1,28 +1,28 @@
 import {INavbarItem} from "@/components";
+import {ROUTE_PATHS} from "@/models";
 
-// TODO use enum
 export const NAVBAR_ITEMS: INavbarItem[] = [
     {
         label: 'Home',
-        value: '/',
+        value: ROUTE_PATHS.HOME,
     },
     {
         label: 'Login',
-        value: '/login',
+        value: ROUTE_PATHS.LOGIN,
     },
     {
         label: 'Register',
-        value: '/register',
+        value: ROUTE_PATHS.REGISTER,
     },
 ];
 
 export const NAVBAR_ITEMS_LOGGED: INavbarItem[] = [
     {
         label: 'Home',
-        value: '/',
+        value: ROUTE_PATHS.HOME,
     },
     {
         label: 'Logout',
-        value: 'logout',
+        value: ROUTE_PATHS.LOGOUT,
     },
 ];

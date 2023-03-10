@@ -6,23 +6,24 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {Home, Login, Register, Error} from "@/pages";
 import {Provider} from "react-redux";
 import store from "@/store/store";
+import {ROUTE_PATHS} from "@/models";
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: ROUTE_PATHS.HOME,
         element: <App/>,
         errorElement: <Error/>,
         children: [
             {
-                path: '/',
+                path: ROUTE_PATHS.HOME,
                 element: <Home/>
             },
             {
-                path: '/register',
+                path: ROUTE_PATHS.REGISTER,
                 element: <Register/>,
             },
             {
-                path: '/login',
+                path: ROUTE_PATHS.LOGIN,
                 element: <Login/>,
             },
         ]

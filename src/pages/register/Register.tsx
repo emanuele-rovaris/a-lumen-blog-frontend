@@ -8,6 +8,7 @@ import {LoadingContext} from "@/App";
 import {setNotificationAction} from "@/store/slices/notificationSlice";
 import {NOTIFICATION_STATUS} from "@/utils";
 import {useAppDispatch} from "@/store/store";
+import {ROUTE_PATHS} from "@/models";
 
 interface IRegisterInput {
     email: string;
@@ -36,7 +37,7 @@ const Register: React.FC = () => {
                 open: true,
                 message: 'Registration success! Login with your credentials',
             }));
-            navigate('/login');
+            navigate(ROUTE_PATHS.LOGIN);
         }).catch(err =>
             dispatch(setNotificationAction({
                 status: NOTIFICATION_STATUS.ERROR,
