@@ -6,6 +6,9 @@ import {login} from "@/services";
 import {useNavigate, useOutletContext} from "react-router-dom";
 import {LoadingContext} from "@/App";
 import {useToken} from "@/hooks";
+import {useAppDispatch} from "@/store/store";
+import {setNotificationAction} from "@/store/slices/notificationSlice";
+import {NOTIFICATION_STATUS} from "@/utils";
 
 interface ILoginInput {
     email: string;
@@ -18,6 +21,7 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
     const {setToken} = useToken();
     const [error, setError] = useState(false);
+    const dispatch = useAppDispatch();
 
     const onSubmit: SubmitHandler<ILoginInput> = data => {
         setLoading(true);
@@ -25,12 +29,20 @@ const Login: React.FC = () => {
             email: data.email,
             password: data.password
         }).then(res => {
+            dispatch(setNotificationAction({
+                status: NOTIFICATION_STATUS.SUCCESS,
+                open: true,
+                message: 'Login success!',
+            }));
             setToken(res.access_token);
             navigate('/');
             setError(false);
         }).catch(err => {
-            setError(true);
-            console.error('Login error', err);
+            dispatch(setNotificationAction({
+                status: NOTIFICATION_STATUS.ERROR,
+                open: true,
+                message: `Login error!\n${err.message}`,
+            }));
         }).finally(() => setLoading(false));
     }
 

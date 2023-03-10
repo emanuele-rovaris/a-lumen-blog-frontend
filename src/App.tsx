@@ -1,8 +1,8 @@
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 import {Backdrop, CircularProgress} from "@mui/material";
 import React, {useState} from "react";
-import {Navbar} from "@/components";
-import {NAVBAR_ITEMS, NAVBAR_ITEMS_LOGGED} from "@/utils";
+import {Navbar, Notification} from "@/components";
+import {NAVBAR_ITEMS, NAVBAR_ITEMS_LOGGED, NOTIFICATION_STATUS} from "@/utils";
 import {useToken} from "@/hooks";
 import {logout} from "@/services";
 import {useAppDispatch, useAppSelector} from "@/store/store";
@@ -13,15 +13,28 @@ function App() {
     const navigate = useNavigate();
     const location = useLocation();
     const {token} = useToken();
-    // const notification = useAppSelector(state => state.notification);
-    // const dispatch = useAppDispatch();
+    const notification = useAppSelector(state => state.notification);
+    const dispatch = useAppDispatch();
 
     const onNavbarClick = (value: string) => {
         if (value === 'logout') {
             setLoading(true);
             logout(token)
-                .then(() => localStorage.removeItem('token'))
-                .catch((err) => console.error('Logout error', err))
+                .then(() => {
+                    dispatch(setNotificationAction({
+                        status: NOTIFICATION_STATUS.SUCCESS,
+                        open: true,
+                        message: 'Logout successful!',
+                    }));
+                    localStorage.removeItem('token');
+                })
+                .catch((err) => {
+                    dispatch(setNotificationAction({
+                        status: NOTIFICATION_STATUS.ERROR,
+                        open: true,
+                        message: `Logout error!\n${err.message}`,
+                    }));
+                })
                 .finally(() => setLoading(false));
         } else {
             navigate(value);
@@ -30,20 +43,14 @@ function App() {
 
     return (
         <div className="App">
-            {/*<pre style={{margin: '100px'}}>*/}
-            {/*{JSON.stringify(notification, null, 2)}*/}
-            {/*<button onClick={() => dispatch(setNotificationAction({*/}
-            {/*    status: 'success',*/}
-            {/*    open: true,*/}
-            {/*    message: 'Notification message!'*/}
-            {/*}))}>CLICK</button>*/}
-            {/*</pre>*/}
             <Navbar items={token ? NAVBAR_ITEMS_LOGGED : NAVBAR_ITEMS}
                     active={location.pathname}
                     click={(e) => onNavbarClick(e)}/>
             <Backdrop open={loading} sx={{zIndex: 9999}}>
                 <CircularProgress/>
             </Backdrop>
+            <Notification notification={notification}
+                          onClose={() => dispatch(setNotificationAction({open: false, status: null, message: null}))}/>
             <div className="RouteContainer">
                 <Outlet context={{setLoading}}/>
             </div>

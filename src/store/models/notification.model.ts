@@ -1,5 +1,4 @@
-export interface INotificationState {
-    open: boolean;
-    status: 'success' | 'warning' | 'error' | null;
-    message: string | null;
+import {INotification} from "@/utils";
+
+export interface INotificationState extends INotification {
 }

@@ -5,6 +5,9 @@ import {register as registerUser} from "@/services";
 import './Register.css';
 import {useNavigate, useOutletContext} from "react-router-dom";
 import {LoadingContext} from "@/App";
+import {setNotificationAction} from "@/store/slices/notificationSlice";
+import {NOTIFICATION_STATUS} from "@/utils";
+import {useAppDispatch} from "@/store/store";
 
 interface IRegisterInput {
     email: string;
@@ -18,6 +21,7 @@ const Register: React.FC = () => {
     const {register, handleSubmit, formState: {errors}, getValues} = useForm<IRegisterInput>();
     const {setLoading} = useOutletContext<LoadingContext>();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const onSubmit: SubmitHandler<IRegisterInput> = data => {
         setLoading(true);
@@ -27,8 +31,19 @@ const Register: React.FC = () => {
             first_name: data.first_name,
             last_name: data.last_name,
         }).then(() => {
+            dispatch(setNotificationAction({
+                status: NOTIFICATION_STATUS.SUCCESS,
+                open: true,
+                message: 'Registration success! Login with your credentials',
+            }));
             navigate('/login');
-        }).catch(err => console.error('Error during registration', err)).finally(() => setLoading(false));
+        }).catch(err =>
+            dispatch(setNotificationAction({
+                status: NOTIFICATION_STATUS.ERROR,
+                open: true,
+                message: `Registration error!\n${err.message}`,
+            }))
+        ).finally(() => setLoading(false));
     }
 
     return (
