@@ -17,12 +17,10 @@ const Notification: React.FC<INotificationProps> = ({notification, onClose}) => 
                           vertical: 'top',
                           horizontal: 'right'
                       }}>
-                <Alert onClose={onClose}
-                       severity={notification.status}>
+                <Alert onClose={onClose} severity={notification.status}>
                     {notification.message}
                 </Alert>
             </Snackbar>}
-
     </>;
 };
 
