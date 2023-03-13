@@ -12,14 +12,14 @@ describe('Card component', () => {
     });
 
     it('should render the component', () => {
-        const cardTitle = screen.getByText(post.title);
-        const cardText = screen.getByText(post.text);
-        const cardUserPicture = screen.getByRole('img')
-        const cardUserName = screen.getByText(post.user.full_name);
-        expect(cardTitle).toBeInTheDocument();
-        expect(cardText).toBeInTheDocument();
-        expect(cardUserPicture).toHaveAttribute('src', post.user.picture);
-        expect(cardUserName).toBeInTheDocument();
+        const title = screen.getByText(post.title);
+        const text = screen.getByText(post.text);
+        const userPicture = screen.getByRole('img')
+        const userName = screen.getByText(post.user.full_name);
+        expect(title).toBeInTheDocument();
+        expect(text).toBeInTheDocument();
+        expect(userPicture).toHaveAttribute('src', post.user.picture);
+        expect(userName).toBeInTheDocument();
     });
 
     it('should call onClick function', () => {
