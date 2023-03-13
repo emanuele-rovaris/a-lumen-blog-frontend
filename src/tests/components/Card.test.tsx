@@ -1,15 +1,14 @@
-import {beforeEach, describe, expect} from 'vitest';
-import {render, screen} from "@testing-library/react";
+import {beforeEach, describe, expect, vi} from 'vitest';
+import {fireEvent, render, screen} from "@testing-library/react";
 import {Card} from "@/components";
 import {postsStub} from "@/tests/stubs/post.stub";
 
-describe('Card', () => {
+describe('Card component', () => {
     const post = postsStub()[0];
+    const handleClick = vi.fn();
 
     beforeEach(() => {
-        render(<Card card={post} click={() => {
-            console.log('click');
-        }}/>);
+        render(<Card card={post} click={handleClick}/>);
     });
 
     it('should render the component', () => {
@@ -21,5 +20,10 @@ describe('Card', () => {
         expect(cardText).toBeInTheDocument();
         expect(cardUserPicture).toHaveAttribute('src', post.user.picture);
         expect(cardUserName).toBeInTheDocument();
+    });
+
+    it('should call onClick function', () => {
+        fireEvent.click(screen.getByRole('img'));
+        expect(handleClick).toHaveBeenCalledWith(1);
     });
 });
