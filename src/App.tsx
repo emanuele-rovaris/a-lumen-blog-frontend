@@ -28,6 +28,7 @@ function App() {
                         message: 'Logout successful!',
                     }));
                     localStorage.removeItem('token');
+                    navigate(ROUTE_PATHS.HOME);
                 })
                 .catch((err) => {
                     dispatch(setNotificationAction({
