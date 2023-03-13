@@ -3,13 +3,12 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {Home, Login, Register, Error} from "@/pages";
+import {Error, Home, Login, Post, Register} from "@/pages";
 import {Provider} from "react-redux";
 import store from "@/store/store";
 import {ROUTE_PATHS} from "@/models";
 
-// TODO try lazy loading
-// TODO store export refactoring?
+// TODO post detail page
 // TODO tests
 
 const router = createBrowserRouter([
@@ -30,6 +29,10 @@ const router = createBrowserRouter([
                 path: ROUTE_PATHS.LOGIN,
                 element: <Login/>,
             },
+            {
+                path: `${ROUTE_PATHS.POST}/:postId`,
+                element: <Post/>
+            }
         ]
     },
 ]);
