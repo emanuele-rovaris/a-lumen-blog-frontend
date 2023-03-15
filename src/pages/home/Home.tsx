@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {IPost, ROUTE_PATHS} from "@/models";
-import {deletePost, getPosts, IDeletePostPayload} from "@/services";
+import {deletePost, getPosts} from "@/services";
 import './Home.css';
 import {Card} from "@/components";
 import {setNotificationAction} from "@/store/slices/notificationSlice";

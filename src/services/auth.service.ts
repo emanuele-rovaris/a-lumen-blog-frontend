@@ -45,3 +45,11 @@ export async function logout(token: string | null): Promise<ILogoutResponse> {
         {headers: {Authorization: `Bearer ${token}`}});
     return response.data;
 }
+
+export async function me(token: string | null): Promise<IUser> {
+    const response = await axios.get(
+        `${import.meta.env.VITE_API_PATH}/auth/me`,
+        {headers: {Authorization: `Bearer ${token}`}}
+    );
+    return response.data;
+}

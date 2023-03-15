@@ -8,6 +8,7 @@ import {logout} from "@/services";
 import {useAppDispatch, useAppSelector} from "@/store/store";
 import {setNotificationAction} from "@/store/slices/notificationSlice";
 import {ROUTE_PATHS} from "@/models";
+import {setUserAction} from "@/store/slices/userSlice";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -28,6 +29,7 @@ function App() {
                         message: 'Logout successful!',
                     }));
                     localStorage.removeItem('token');
+                    dispatch(setUserAction({id: null}));
                     navigate(ROUTE_PATHS.HOME);
                 })
                 .catch((err) => {
