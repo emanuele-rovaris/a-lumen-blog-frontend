@@ -5,7 +5,7 @@ import './Home.css';
 import {Card} from "@/components";
 import {setNotificationAction} from "@/store/slices/notificationSlice";
 import {NOTIFICATION_STATUS} from "@/utils";
-import {useAppDispatch} from "@/store/store";
+import {useAppDispatch, useAppSelector} from "@/store/store";
 import {useNavigate, useOutletContext} from "react-router-dom";
 import {LoadingContext} from "@/App";
 import {useToken} from "@/hooks";
@@ -13,6 +13,7 @@ import {useToken} from "@/hooks";
 const Home: React.FC = () => {
     const [posts, setPosts] = useState<IPost[]>([]);
     const dispatch = useAppDispatch();
+    const userId = useAppSelector(state => state.user.id);
     const {setLoading} = useOutletContext<LoadingContext>();
     const navigate = useNavigate();
     const {token} = useToken();
@@ -61,6 +62,7 @@ const Home: React.FC = () => {
             {posts.map((item, index) => (
                 <Card key={`card-${index}`}
                       card={item}
+                      allowDelete={item.user.id === userId}
                       click={onOpenPost}
                       onDelete={onDeletePost}/>
             ))}

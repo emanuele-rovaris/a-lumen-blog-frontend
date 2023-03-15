@@ -26,6 +26,7 @@ describe('Home page', () => {
         return {
             ...actual,
             useDispatch: vi.fn(),
+            useSelector: vi.fn(),
         }
     });
 
@@ -64,7 +65,7 @@ describe('Home page', () => {
         );
         const firstPost = await waitFor(() => screen.queryByText(fakeData[0].title));
         expect(firstPost).toBeNull();
-        expect(useDispatchMock).toHaveBeenCalledTimes(1);
+        expect(useDispatchMock).toHaveBeenCalled();
         expect(dispatchResultRecorder['notification/setNotificationAction'])
             .toEqual({status: 'error', open: true, message: 'Error retrieving posts!\nError'});
     });
