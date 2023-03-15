@@ -34,3 +34,8 @@
     border-radius: 50%;
     width: 30px;
 }
+
+.Card__header {
+    display: flex;
+    justify-content: space-between;
+}
