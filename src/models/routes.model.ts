@@ -4,4 +4,5 @@ export enum ROUTE_PATHS {
     REGISTER = '/register',
     LOGOUT = '/logout',
     POST = '/post',
+    CREATE_POST = '/create-post',
 }

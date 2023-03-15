@@ -1,0 +1,10 @@
+.CreatePost {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.CreatePost__field {
+    width: 600px;
+}

@@ -13,7 +13,9 @@ const Card: React.FC<ICardProps> = ({card, click}) => {
             <h3 className="Card__title">{card.title}</h3>
             <p className="Card__text">{card.text}</p>
             <div className="Card__user">
-                <img className="Card__user--picture" src={card.user.picture} alt="user-profile-pic"></img>
+                <img className="Card__user--picture"
+                     src={card.user.picture ?? 'https://picsum.photos/30/30'}
+                     alt="user-profile-pic"/>
                 <div className="Card__user--name">{card.user.full_name}</div>
             </div>
         </div>

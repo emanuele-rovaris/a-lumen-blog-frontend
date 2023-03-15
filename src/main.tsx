@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
-import {Error, Home, Login, Post, Register} from "@/pages";
+import {CreatePost, Error, Home, Login, Post, Register} from "@/pages";
 import {Provider} from "react-redux";
 import store from "@/store/store";
 import {ROUTE_PATHS} from "@/models";
@@ -17,6 +17,7 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path={ROUTE_PATHS.REGISTER} element={<Register/>}/>
         <Route path={ROUTE_PATHS.LOGIN} element={<Login/>}/>
         <Route path={`${ROUTE_PATHS.POST}/:postId`} element={<ProtectedRoute><Post/></ProtectedRoute>}/>
+        <Route path={ROUTE_PATHS.CREATE_POST} element={<ProtectedRoute><CreatePost/></ProtectedRoute>}/>
     </Route>
 ))
 
