@@ -1,10 +1,10 @@
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 import {Backdrop, CircularProgress} from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Navbar, Notification} from "@/components";
 import {NAVBAR_ITEMS, NAVBAR_ITEMS_LOGGED, NOTIFICATION_STATUS} from "@/utils";
 import {useToken} from "@/hooks";
-import {logout} from "@/services";
+import {logout, me} from "@/services";
 import {useAppDispatch, useAppSelector} from "@/store/store";
 import {setNotificationAction} from "@/store/slices/notificationSlice";
 import {ROUTE_PATHS} from "@/models";
@@ -44,6 +44,16 @@ function App() {
             navigate(value);
         }
     }
+
+    useEffect(() => {
+        if (token) {
+            me(token)
+                .then((res) => {
+                    dispatch(setUserAction({id: res.id}));
+                })
+                .catch((err) => console.error(err));
+        }
+    }, [token]);
 
     return (
         <div className="App">
