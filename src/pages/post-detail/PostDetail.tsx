@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {useOutletContext, useParams} from "react-router-dom";
-import {createComment, getPostComments, getPostDetails} from "@/services";
+import {createComment, deleteComment, getPostComments, getPostDetails} from "@/services";
 import {LoadingContext} from "@/App";
 import {IComment, IPost} from "@/models";
 import {setNotificationAction} from "@/store/slices/notificationSlice";
 import {NOTIFICATION_STATUS} from "@/utils";
-import {useAppDispatch} from "@/store/store";
+import {useAppDispatch, useAppSelector} from "@/store/store";
 import './PostDetail.css';
 import {
     Accordion, AccordionDetails,
@@ -23,10 +23,15 @@ const PostDetail: React.FC = () => {
     const {postId} = useParams();
     const {setLoading} = useOutletContext<LoadingContext>();
     const dispatch = useAppDispatch();
+    const userId = useAppSelector(state => state.user.id)
     const {token} = useToken();
     const [post, setPost] = useState<IPost>();
     const [comments, setComments] = useState<IComment[]>([]);
     const [newComment, setNewComment] = useState<string>('');
+
+    useEffect(() => {
+        retrieveData();
+    }, []);
 
     const retrieveData = useCallback(() => {
         if (postId) {
@@ -48,10 +53,6 @@ const PostDetail: React.FC = () => {
         }
     }, []);
 
-    useEffect(() => {
-        retrieveData();
-    }, []);
-
     const addNewComment = (key: string) => {
         if (key === 'Enter' && postId) {
             setLoading(true);
@@ -67,6 +68,18 @@ const PostDetail: React.FC = () => {
                 })))
                 .finally(() => setLoading(false))
         }
+    }
+
+    const handleDeleteComment = (id: number) => {
+        setLoading(true);
+        deleteComment({id: postId, token: token, commentId: id})
+            .then(() => retrieveData())
+            .catch(err => dispatch(setNotificationAction({
+                status: NOTIFICATION_STATUS.ERROR,
+                open: true,
+                message: `Error deleting comment!\n${err.message}`,
+            })))
+            .finally(() => setLoading(false))
     }
 
     return (
@@ -85,19 +98,19 @@ const PostDetail: React.FC = () => {
                                         <Avatar src='https://picsum.photos/30/30' alt="profile-pic"/>
                                     </ListItemAvatar>
                                     <ListItemText primary={item.user.full_name} secondary={item.text}/>
-                                    <ListItemButton>del</ListItemButton>
+                                    {item.user.id === userId && <ListItemButton
+                                        onClick={() => handleDeleteComment(item.id)}>del</ListItemButton>}
                                 </ListItem>
                             ))}
                         </List>
-                        <TextField label="Add a comment"
-                                   fullWidth
-                                   value={newComment}
-                                   onChange={e => setNewComment(e.target.value)}
-                                   onKeyDown={e => addNewComment(e.key)}
-                        />
                     </AccordionDetails>
                 </Accordion>}
-
+            <TextField label="Add a comment"
+                       fullWidth
+                       value={newComment}
+                       onChange={e => setNewComment(e.target.value)}
+                       onKeyDown={e => addNewComment(e.key)}
+            />
         </div>
     );
 }
