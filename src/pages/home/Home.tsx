@@ -43,6 +43,10 @@ const Home: React.FC = () => {
             .finally(() => setLoading(false));
     }
 
+    const onEditPost = (id: number) => {
+        navigate(`${ROUTE_PATHS.CREATE_POST}?id=${id}`);
+    }
+
     useEffect(() => {
         setLoading(true);
         getPosts()
@@ -62,9 +66,10 @@ const Home: React.FC = () => {
             {posts.map((item, index) => (
                 <Card key={`card-${index}`}
                       card={item}
-                      allowDelete={item.user.id === userId}
+                      allowActions={item.user.id === userId}
                       click={onOpenPost}
-                      onDelete={onDeletePost}/>
+                      onDelete={onDeletePost}
+                      onEdit={onEditPost}/>
             ))}
         </div>
     );

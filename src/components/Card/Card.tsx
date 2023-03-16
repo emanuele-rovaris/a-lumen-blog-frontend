@@ -6,11 +6,12 @@ import {Button} from "@mui/material";
 interface ICardProps {
     card: IPost;
     click: (id: number) => void;
-    allowDelete?: boolean;
+    allowActions?: boolean;
     onDelete?: (id: number) => void;
+    onEdit: (id: number) => void;
 }
 
-const Card: React.FC<ICardProps> = ({card, click, allowDelete = true, onDelete}) => {
+const Card: React.FC<ICardProps> = ({card, click, allowActions = true, onDelete, onEdit}) => {
 
     const handleDelete = (e: any, id: number) => {
         e.stopPropagation();
@@ -19,11 +20,21 @@ const Card: React.FC<ICardProps> = ({card, click, allowDelete = true, onDelete})
         }
     }
 
+    const handleEdit = (e: any, id: number) => {
+        e.stopPropagation();
+        onEdit(id);
+    }
+
+
     return (
         <div className="Card" onClick={() => click(card.id)}>
             <div className="Card__header">
                 <h3 className="Card__title">{card.title}</h3>
-                {allowDelete && <Button onClick={(e) => handleDelete(e, card.id)}>Delete</Button>}
+                {allowActions &&
+                    <div>
+                        <Button onClick={(e) => handleEdit(e, card.id)}>Edit</Button>
+                        <Button onClick={(e) => handleDelete(e, card.id)}>Delete</Button>
+                    </div>}
             </div>
             <p className="Card__text">{card.text}</p>
             <div className="Card__user">

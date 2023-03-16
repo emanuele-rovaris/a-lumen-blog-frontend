@@ -12,6 +12,10 @@ export interface IDeletePostPayload {
     id: number;
 }
 
+export interface IEditPostPayload extends ICreatePostPayload {
+    id: number;
+}
+
 export async function getPosts(): Promise<IPost[]> {
     const response = await axios.get(`${import.meta.env.VITE_API_PATH}/posts`);
     return response.data;
@@ -36,6 +40,17 @@ export async function createPost(payload: ICreatePostPayload): Promise<IPost> {
 export async function deletePost(payload: IDeletePostPayload): Promise<[]> {
     const response = await axios.delete(
         `${import.meta.env.VITE_API_PATH}/posts/${payload.id}`,
+        {headers: {Authorization: `Bearer ${payload.token}`}});
+    return response.data;
+}
+
+export async function editPost(payload: IEditPostPayload): Promise<IPost> {
+    const form = new FormData();
+    form.append('title', payload.title);
+    form.append('text', payload.text);
+    const response = await axios.put(
+        `${import.meta.env.VITE_API_PATH}/posts/${payload.id}`,
+        form,
         {headers: {Authorization: `Bearer ${payload.token}`}});
     return response.data;
 }

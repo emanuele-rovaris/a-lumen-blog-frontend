@@ -9,8 +9,6 @@ import store from "@/store/store";
 import {ROUTE_PATHS} from "@/models";
 import {ProtectedRoute} from "@/components";
 
-// TODO tests (exclude from build)
-
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path={ROUTE_PATHS.HOME} element={<App/>} errorElement={<Error/>}>
         <Route path={ROUTE_PATHS.HOME} element={<Home/>}/>

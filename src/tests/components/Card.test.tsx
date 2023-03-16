@@ -8,7 +8,7 @@ describe('Card component', () => {
     const handleClick = vi.fn();
 
     beforeEach(() => {
-        render(<Card card={post} click={handleClick}/>);
+        render(<Card card={post} click={handleClick} onEdit={handleClick}/>);
     });
 
     it('should render the component', () => {
