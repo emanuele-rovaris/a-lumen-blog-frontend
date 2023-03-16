@@ -11,9 +11,6 @@ import {NOTIFICATION_STATUS} from "@/utils";
 import {ROUTE_PATHS} from "@/models";
 import {createPost, editPost, getPostDetails} from "@/services";
 
-// TODO test fix
-// todo me api call
-
 interface ICreatePostInput {
     title: string;
     text: string;

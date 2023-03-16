@@ -13,7 +13,7 @@ describe("posts service", () => {
         expect(posts).toEqual(fakeData);
     });
 
-    it('should retrieve post details', async () => {
+    it('should retrieve post-detail details', async () => {
         const fakeData = postsStub()[0];
         vi.spyOn(axios, "get").mockImplementation(() =>
             Promise.resolve({data: fakeData}),

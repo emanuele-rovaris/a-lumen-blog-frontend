@@ -3,6 +3,6 @@ export enum ROUTE_PATHS {
     LOGIN = '/login',
     REGISTER = '/register',
     LOGOUT = '/logout',
-    POST = '/post',
+    POST_DETAIL = '/post-detail',
     CREATE_POST = '/create-post',
 }

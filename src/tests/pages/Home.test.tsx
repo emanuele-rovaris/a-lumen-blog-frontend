@@ -70,7 +70,7 @@ describe('Home page', () => {
             .toEqual({status: 'error', open: true, message: 'Error retrieving posts!\nError'});
     });
 
-    it('should navigate to post detail on click', async () => {
+    it('should navigate to post-detail detail on click', async () => {
         // vi.spyOn(axios, "get").mockImplementationOnce(() =>
         //     Promise.resolve({data: fakeData}),
         // );

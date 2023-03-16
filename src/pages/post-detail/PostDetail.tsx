@@ -6,9 +6,9 @@ import {IPost} from "@/models";
 import {setNotificationAction} from "@/store/slices/notificationSlice";
 import {NOTIFICATION_STATUS} from "@/utils";
 import {useAppDispatch} from "@/store/store";
-import './Post.css';
+import './PostDetail.css';
 
-const Post: React.FC = () => {
+const PostDetail: React.FC = () => {
     const {postId} = useParams();
     const {setLoading} = useOutletContext<LoadingContext>();
     const dispatch = useAppDispatch();
@@ -30,7 +30,7 @@ const Post: React.FC = () => {
     }, []);
 
     return (
-        <div className="Post">
+        <div className="PostDetail">
             <img src={'https://picsum.photos/1000/300'}/>
             <h1>{post?.title}</h1>
             <p>{post?.text}</p>
@@ -39,4 +39,4 @@ const Post: React.FC = () => {
     );
 }
 
-export default Post;
+export default PostDetail;

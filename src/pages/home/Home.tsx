@@ -19,7 +19,7 @@ const Home: React.FC = () => {
     const {token} = useToken();
 
     const onOpenPost = (id: number) => {
-        navigate(`${ROUTE_PATHS.POST}/${id}`);
+        navigate(`${ROUTE_PATHS.POST_DETAIL}/${id}`);
     }
 
     const onDeletePost = (id: number) => {
