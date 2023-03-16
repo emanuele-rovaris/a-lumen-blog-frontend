@@ -72,7 +72,7 @@ const CreatePost: React.FC = () => {
 
     return (
         <form className="CreatePost" onSubmit={handleSubmit(onSubmit)}>
-            <h2>CreatePost</h2>
+            <h2>{id ? 'Edit Post' : 'Create Post'}</h2>
             <TextField
                 {...register("title", {
                     required: "Title is required",

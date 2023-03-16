@@ -44,7 +44,7 @@ const Home: React.FC = () => {
     }
 
     const onEditPost = (id: number) => {
-        navigate(`${ROUTE_PATHS.CREATE_POST}?id=${id}`);
+        navigate(`${ROUTE_PATHS.EDIT_POST}?id=${id}`);
     }
 
     useEffect(() => {

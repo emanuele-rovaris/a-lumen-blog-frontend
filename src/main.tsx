@@ -16,6 +16,7 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path={ROUTE_PATHS.LOGIN} element={<Login/>}/>
         <Route path={`${ROUTE_PATHS.POST_DETAIL}/:postId`} element={<ProtectedRoute><PostDetail/></ProtectedRoute>}/>
         <Route path={ROUTE_PATHS.CREATE_POST} element={<ProtectedRoute><CreatePost/></ProtectedRoute>}/>
+        <Route path={ROUTE_PATHS.EDIT_POST} element={<ProtectedRoute><CreatePost/></ProtectedRoute>}/>
     </Route>
 ))
 
