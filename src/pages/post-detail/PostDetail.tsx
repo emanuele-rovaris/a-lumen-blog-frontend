@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useOutletContext, useParams} from "react-router-dom";
-import {getPostComments, getPostDetails} from "@/services";
+import {createComment, getPostComments, getPostDetails} from "@/services";
 import {LoadingContext} from "@/App";
 import {IComment, IPost} from "@/models";
 import {setNotificationAction} from "@/store/slices/notificationSlice";
@@ -15,17 +15,20 @@ import {
     ListItem,
     ListItemAvatar,
     ListItemButton,
-    ListItemText
+    ListItemText, TextField
 } from "@mui/material";
+import {useToken} from "@/hooks";
 
 const PostDetail: React.FC = () => {
     const {postId} = useParams();
     const {setLoading} = useOutletContext<LoadingContext>();
     const dispatch = useAppDispatch();
+    const {token} = useToken();
     const [post, setPost] = useState<IPost>();
     const [comments, setComments] = useState<IComment[]>([]);
+    const [newComment, setNewComment] = useState<string>('');
 
-    useEffect(() => {
+    const retrieveData = useCallback(() => {
         if (postId) {
             setLoading(true);
             Promise.all([
@@ -45,6 +48,27 @@ const PostDetail: React.FC = () => {
         }
     }, []);
 
+    useEffect(() => {
+        retrieveData();
+    }, []);
+
+    const addNewComment = (key: string) => {
+        if (key === 'Enter' && postId) {
+            setLoading(true);
+            createComment({post_id: postId, text: newComment, token: token})
+                .then(() => {
+                    setNewComment('');
+                    retrieveData();
+                })
+                .catch(err => dispatch(setNotificationAction({
+                    status: NOTIFICATION_STATUS.ERROR,
+                    open: true,
+                    message: `Error adding comment!\n${err.message}`,
+                })))
+                .finally(() => setLoading(false))
+        }
+    }
+
     return (
         <div className="PostDetail">
             <img src={'https://picsum.photos/1000/300'}/>
@@ -56,7 +80,7 @@ const PostDetail: React.FC = () => {
                     <AccordionDetails>
                         <List>
                             {comments.map(item => (
-                                <ListItem alignItems='flex-start'>
+                                <ListItem key={item.id} alignItems='flex-start'>
                                     <ListItemAvatar>
                                         <Avatar src='https://picsum.photos/30/30' alt="profile-pic"/>
                                     </ListItemAvatar>
@@ -65,6 +89,12 @@ const PostDetail: React.FC = () => {
                                 </ListItem>
                             ))}
                         </List>
+                        <TextField label="Add a comment"
+                                   fullWidth
+                                   value={newComment}
+                                   onChange={e => setNewComment(e.target.value)}
+                                   onKeyDown={e => addNewComment(e.key)}
+                        />
                     </AccordionDetails>
                 </Accordion>}
 
