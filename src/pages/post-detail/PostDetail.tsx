@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {useOutletContext, useParams} from "react-router-dom";
-import {createComment, deleteComment, getPostComments, getPostDetails} from "@/services";
+import {createComment, deleteComment, editComment, getPostComments, getPostDetails} from "@/services";
 import {LoadingContext} from "@/App";
 import {IComment, IPost} from "@/models";
 import {setNotificationAction} from "@/store/slices/notificationSlice";
@@ -28,6 +28,8 @@ const PostDetail: React.FC = () => {
     const [post, setPost] = useState<IPost>();
     const [comments, setComments] = useState<IComment[]>([]);
     const [newComment, setNewComment] = useState<string>('');
+    const [edit, setEdit] = useState<number | null>(null);
+    const [edited, setEdited] = useState<string>('');
 
     useEffect(() => {
         retrieveData();
@@ -82,6 +84,24 @@ const PostDetail: React.FC = () => {
             .finally(() => setLoading(false))
     }
 
+    const handleEditComment = (key: string, id: number, text: string) => {
+        if (key === 'Enter') {
+            setLoading(true);
+            editComment({id: postId, token: token, commentId: id, text: text})
+                .then(() => retrieveData())
+                .catch(err => dispatch(setNotificationAction({
+                    status: NOTIFICATION_STATUS.ERROR,
+                    open: true,
+                    message: `Error editing comment!\n${err.message}`,
+                })))
+                .finally(() => {
+                    setLoading(false);
+                    setEdit(null);
+                    setEdited('');
+                })
+        }
+    }
+
     return (
         <div className="PostDetail">
             <img src={'https://picsum.photos/1000/300'}/>
@@ -97,9 +117,27 @@ const PostDetail: React.FC = () => {
                                     <ListItemAvatar>
                                         <Avatar src='https://picsum.photos/30/30' alt="profile-pic"/>
                                     </ListItemAvatar>
-                                    <ListItemText primary={item.user.full_name} secondary={item.text}/>
-                                    {item.user.id === userId && <ListItemButton
-                                        onClick={() => handleDeleteComment(item.id)}>del</ListItemButton>}
+                                    {edit === item.id
+                                        ? <TextField label="Edit"
+                                                     fullWidth
+                                                     value={edited}
+                                                     onChange={e => setEdited(e.target.value)}
+                                                     onKeyDown={e => handleEditComment(e.key, item.id, edited)}
+                                        />
+                                        : <>
+                                            <ListItemText primary={item.user.full_name} secondary={item.text}/>
+                                            {item.user.id === userId && <>
+                                                <ListItemButton
+                                                    onClick={() => {
+                                                        setEdit(item.id);
+                                                        setEdited(item.text);
+                                                    }}>edit</ListItemButton>
+                                                <ListItemButton
+                                                    onClick={() => handleDeleteComment(item.id)}>del</ListItemButton>
+                                            </>}
+                                        </>
+                                    }
+
                                 </ListItem>
                             ))}
                         </List>
