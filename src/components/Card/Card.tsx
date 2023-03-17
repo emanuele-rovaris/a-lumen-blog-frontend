@@ -2,6 +2,8 @@ import React from 'react';
 import {IPost} from "@/models";
 import './Card.css';
 import {Button} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface ICardProps {
     card: IPost;
@@ -32,8 +34,12 @@ const Card: React.FC<ICardProps> = ({card, click, allowActions = true, onDelete,
                 <h3 className="Card__title">{card.title}</h3>
                 {allowActions &&
                     <div>
-                        <Button onClick={(e) => handleEdit(e, card.id)}>Edit</Button>
-                        <Button onClick={(e) => handleDelete(e, card.id)}>Delete</Button>
+                        <Button onClick={(e) => handleEdit(e, card.id)}>
+                            <EditIcon/>
+                        </Button>
+                        <Button onClick={(e) => handleDelete(e, card.id)}>
+                            <DeleteIcon/>
+                        </Button>
                     </div>}
             </div>
             <p className="Card__text">{card.text}</p>

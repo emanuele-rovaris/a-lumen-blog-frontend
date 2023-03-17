@@ -14,10 +14,12 @@ import {
     List,
     ListItem,
     ListItemAvatar,
-    ListItemButton,
+    ListItemButton, ListItemIcon,
     ListItemText, TextField
 } from "@mui/material";
 import {useToken} from "@/hooks";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const PostDetail: React.FC = () => {
     const {postId} = useParams();
@@ -129,13 +131,17 @@ const PostDetail: React.FC = () => {
                                                           secondary={item.text}
                                                           style={{width: '100%'}}/>
                                             {item.user.id === userId && <>
-                                                <ListItemButton
-                                                    onClick={() => {
-                                                        setEdit(item.id);
-                                                        setEdited(item.text);
-                                                    }}>edit</ListItemButton>
-                                                <ListItemButton
-                                                    onClick={() => handleDeleteComment(item.id)}>del</ListItemButton>
+                                                <ListItemIcon style={{cursor: "pointer"}}
+                                                              onClick={() => {
+                                                                  setEdit(item.id);
+                                                                  setEdited(item.text);
+                                                              }}>
+                                                    <EditIcon/>
+                                                </ListItemIcon>
+                                                <ListItemIcon style={{cursor: "pointer"}}
+                                                              onClick={() => handleDeleteComment(item.id)}>
+                                                    <DeleteIcon/>
+                                                </ListItemIcon>
                                             </>}
                                         </>
                                     }
