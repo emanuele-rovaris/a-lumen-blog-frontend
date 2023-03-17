@@ -108,8 +108,8 @@ const PostDetail: React.FC = () => {
             <h1>{post?.title}</h1>
             <p>{post?.text}</p>
             {comments.length > 0 &&
-                <Accordion>
-                    <AccordionSummary expandIcon={'todo'}>{post?.comments_count} comments</AccordionSummary>
+                <Accordion style={{width: '100%'}}>
+                    <AccordionSummary expandIcon={'v'}>{post?.comments_count} comments</AccordionSummary>
                     <AccordionDetails>
                         <List>
                             {comments.map(item => (
@@ -125,7 +125,9 @@ const PostDetail: React.FC = () => {
                                                      onKeyDown={e => handleEditComment(e.key, item.id, edited)}
                                         />
                                         : <>
-                                            <ListItemText primary={item.user.full_name} secondary={item.text}/>
+                                            <ListItemText primary={item.user.full_name}
+                                                          secondary={item.text}
+                                                          style={{width: '100%'}}/>
                                             {item.user.id === userId && <>
                                                 <ListItemButton
                                                     onClick={() => {
