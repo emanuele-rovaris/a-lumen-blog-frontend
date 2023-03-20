@@ -10,6 +10,16 @@
     margin-bottom: 30px;
 }
 
-.PostDetail__text {
-    margin-bottom: 30px;
+.Post__user {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.Post__user--picture {
+    border-radius: 50%;
+    width: 30px;
 }

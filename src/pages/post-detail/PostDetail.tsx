@@ -108,7 +108,13 @@ const PostDetail: React.FC = () => {
         <div className="PostDetail">
             <h1>{post?.title}</h1>
             <img className="PostDetail__image" src={`https://picsum.photos/seed/${post?.id}/1000/400`}/>
-            <p className="PostDetail__text">{post?.text}</p>
+            <p>{post?.text}</p>
+            <div className="Post__user">
+                <img className="Post__user--picture"
+                     src={post?.user.picture ?? `https://picsum.photos/seed/${post?.user.id}/30/30`}
+                     alt="user-profile-pic"/>
+                <div className="Post__user--name">{post?.user.full_name}</div>
+            </div>
             {comments.length > 0 &&
                 <Accordion style={{width: '100%'}}>
                     <AccordionSummary expandIcon={'v'}>Comments ({post?.comments_count})</AccordionSummary>
