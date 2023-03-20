@@ -6,13 +6,12 @@ interface RenderRouteWithOutletContextProps<T = any> {
     children: ReactNode;
 }
 
-export const RenderRouteWithOutletContext = <T, >({context, children}: RenderRouteWithOutletContextProps<T>) => {
+export const RenderRouteWithOutletContext = <T, ReactNode>({context, children}: RenderRouteWithOutletContextProps<T>) => {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Outlet context={context as T}/>}>
                     <Route index element={children}/>
-                    <Route path="post-detail/1" element={<Outlet context={context as T}/>}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

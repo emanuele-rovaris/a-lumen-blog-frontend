@@ -7,8 +7,8 @@ import React from "react";
 import {RenderRouteWithOutletContext} from "../utils/outlet-context.utils";
 import {AnyAction} from "redux";
 import {useDispatch} from "react-redux";
-import * as router from "react-router-dom";
 import {useNavigate} from "react-router-dom";
+import {ROUTE_PATHS} from "@/models";
 
 describe('Home page', () => {
     const fakeData = postsStub();
@@ -36,11 +36,16 @@ describe('Home page', () => {
         const actual: any = await vi.importActual("react-router-dom")
         return {
             ...actual,
-            useNavigate: () => vi.fn().mockImplementation((e: string) => {
-                console.log(e)
-            }),
+            useNavigate: vi.fn(),
         }
     });
+
+    let routingResultRecorder: string | null = null;
+    const fakeRouting = (route: string) => {
+        routingResultRecorder = route;
+    };
+    const useNavigationMock = useNavigate as Mock;
+    useNavigationMock.mockImplementation(() => fakeRouting);
 
     it('should retrieve and render posts list', async () => {
         vi.spyOn(axios, "get").mockImplementationOnce(() =>
@@ -71,11 +76,10 @@ describe('Home page', () => {
             .toEqual({status: 'error', open: true, message: 'Error retrieving posts!\nError'});
     });
 
-    it('should navigate to post-detail detail on click', async () => {
+    it('should navigate to post detail on click', async () => {
         vi.spyOn(axios, "get").mockImplementationOnce(() =>
             Promise.resolve({data: fakeData}),
         );
-        vi.spyOn(router, 'useNavigate');
         render(
             <RenderRouteWithOutletContext context={mockOutletContextData}>
                 <Home/>
@@ -83,6 +87,7 @@ describe('Home page', () => {
         );
         const firstPost = await waitFor(() => screen.getByText(fakeData[0].title));
         fireEvent.click(firstPost);
-        expect(useNavigate).toHaveBeenCalled();
+        expect(useNavigationMock).toHaveBeenCalled();
+        expect(routingResultRecorder).toEqual(`${ROUTE_PATHS.POST_DETAIL}/${fakeData[0].id}`);
     });
 });
