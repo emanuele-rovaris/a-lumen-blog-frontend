@@ -1,5 +1,8 @@
 import {INavbarItem} from "@/components";
 import {ROUTE_PATHS} from "@/models";
+import PersonIcon from '@mui/icons-material/Person';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export const NAVBAR_ITEMS: INavbarItem[] = [
     {
@@ -9,10 +12,12 @@ export const NAVBAR_ITEMS: INavbarItem[] = [
     {
         label: 'Login',
         value: ROUTE_PATHS.LOGIN,
+        icon: <LoginIcon/>,
     },
     {
         label: 'Register',
         value: ROUTE_PATHS.REGISTER,
+        icon: <PersonIcon/>,
     },
 ];
 
@@ -28,5 +33,6 @@ export const NAVBAR_ITEMS_LOGGED: INavbarItem[] = [
     {
         label: 'Logout',
         value: ROUTE_PATHS.LOGOUT,
+        icon: <LogoutIcon/>,
     },
 ];

@@ -14,8 +14,8 @@ const Notification: React.FC<INotificationProps> = ({notification, onClose}) => 
                       autoHideDuration={3000}
                       onClose={onClose}
                       anchorOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right'
+                          vertical: 'bottom',
+                          horizontal: 'left'
                       }}>
                 <Alert onClose={onClose} severity={notification.status}>
                     {notification.message}
