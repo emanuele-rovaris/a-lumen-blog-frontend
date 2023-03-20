@@ -45,7 +45,7 @@ const Card: React.FC<ICardProps> = ({card, click, allowActions = true, onDelete,
             <p className="Card__text">{card.text}</p>
             <div className="Card__user">
                 <img className="Card__user--picture"
-                     src={card.user.picture ?? 'https://picsum.photos/30/30'}
+                     src={card.user.picture ?? `https://picsum.photos/seed/${card.user.id}/30/30`}
                      alt="user-profile-pic"/>
                 <div className="Card__user--name">{card.user.full_name}</div>
             </div>

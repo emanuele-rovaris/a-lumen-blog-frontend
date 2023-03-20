@@ -10,7 +10,7 @@ import './PostDetail.css';
 import {
     Accordion, AccordionDetails,
     AccordionSummary,
-    Avatar,
+    Avatar, ImageList, ImageListItem,
     List,
     ListItem,
     ListItemAvatar,
@@ -106,18 +106,19 @@ const PostDetail: React.FC = () => {
 
     return (
         <div className="PostDetail">
-            <img src={'https://picsum.photos/1000/300'}/>
             <h1>{post?.title}</h1>
-            <p>{post?.text}</p>
+            <img className="PostDetail__image" src={`https://picsum.photos/seed/${post?.id}/1000/400`}/>
+            <p className="PostDetail__text">{post?.text}</p>
             {comments.length > 0 &&
                 <Accordion style={{width: '100%'}}>
-                    <AccordionSummary expandIcon={'v'}>{post?.comments_count} comments</AccordionSummary>
+                    <AccordionSummary expandIcon={'v'}>Comments ({post?.comments_count})</AccordionSummary>
                     <AccordionDetails>
                         <List>
                             {comments.map(item => (
                                 <ListItem key={item.id} alignItems='flex-start'>
                                     <ListItemAvatar>
-                                        <Avatar src='https://picsum.photos/30/30' alt="profile-pic"/>
+                                        <Avatar src={`https://picsum.photos/seed/${item.user.id}/30/30`}
+                                                alt="profile-pic"/>
                                     </ListItemAvatar>
                                     {edit === item.id
                                         ? <TextField label="Edit"

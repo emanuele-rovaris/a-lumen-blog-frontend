@@ -5,3 +5,11 @@
     padding: 40px;
     gap: 20px;
 }
+
+.PostDetail__image {
+    margin-bottom: 30px;
+}
+
+.PostDetail__text {
+    margin-bottom: 30px;
+}
