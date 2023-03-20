@@ -7,20 +7,14 @@ import React from "react";
 import {RenderRouteWithOutletContext} from "../utils/outlet-context.utils";
 import {AnyAction} from "redux";
 import {useDispatch} from "react-redux";
+import * as router from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 
 describe('Home page', () => {
     const fakeData = postsStub();
     const mockOutletContextData = {setLoading: () => true};
 
-    // vi.mock("react-router-dom", async () => {
-    //     const actual: any = await vi.importActual("react-router-dom")
-    //     return {
-    //         ...actual,
-    //         useNavigate: vi.fn(),
-    //     }
-    // });
-
+    // Redux setup
     vi.mock("react-redux", async () => {
         const actual: any = await vi.importActual("react-redux");
         return {
@@ -37,8 +31,15 @@ describe('Home page', () => {
     const useDispatchMock = useDispatch as Mock;
     useDispatchMock.mockImplementation(() => fakeDispatch);
 
-    afterEach(() => {
-        useDispatchMock.mockClear();
+    // Routing setup
+    vi.mock("react-router-dom", async () => {
+        const actual: any = await vi.importActual("react-router-dom")
+        return {
+            ...actual,
+            useNavigate: () => vi.fn().mockImplementation((e: string) => {
+                console.log(e)
+            }),
+        }
     });
 
     it('should retrieve and render posts list', async () => {
@@ -71,16 +72,17 @@ describe('Home page', () => {
     });
 
     it('should navigate to post-detail detail on click', async () => {
-        // vi.spyOn(axios, "get").mockImplementationOnce(() =>
-        //     Promise.resolve({data: fakeData}),
-        // );
-        // render(
-        //     <RenderRouteWithOutletContext context={mockOutletContextData}>
-        //         <Home/>
-        //     </RenderRouteWithOutletContext>
-        // );
-        // const firstPost = await waitFor(() => screen.getByText(fakeData[0].title));
-        // fireEvent.click(firstPost);
-        // expect(useNavigate).toHaveBeenCalledWith('');
+        vi.spyOn(axios, "get").mockImplementationOnce(() =>
+            Promise.resolve({data: fakeData}),
+        );
+        vi.spyOn(router, 'useNavigate');
+        render(
+            <RenderRouteWithOutletContext context={mockOutletContextData}>
+                <Home/>
+            </RenderRouteWithOutletContext>
+        );
+        const firstPost = await waitFor(() => screen.getByText(fakeData[0].title));
+        fireEvent.click(firstPost);
+        expect(useNavigate).toHaveBeenCalled();
     });
 });

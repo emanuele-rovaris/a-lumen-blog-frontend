@@ -12,6 +12,7 @@ export const RenderRouteWithOutletContext = <T, >({context, children}: RenderRou
             <Routes>
                 <Route path="/" element={<Outlet context={context as T}/>}>
                     <Route index element={children}/>
+                    <Route path="post-detail/1" element={<Outlet context={context as T}/>}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>
